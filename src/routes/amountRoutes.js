@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const amountController = require('../controllers/amountController');
-
+ 
 // Configure multer for memory storage (best for SDE assignments)
 const storage = multer.memoryStorage();
 const upload = multer({ 
