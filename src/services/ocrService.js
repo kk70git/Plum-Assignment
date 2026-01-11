@@ -1,5 +1,5 @@
 const Tesseract = require('tesseract.js');
- 
+  
 const processInput = async (input) => {
   // If input is a buffer (image), run OCR
   if (Buffer.isBuffer(input)) {
@@ -7,7 +7,7 @@ const processInput = async (input) => {
     return text;
   }
   // If it's already text, return as is
-  return input;
+  return input; 
 };
  
 module.exports = { processInput };
