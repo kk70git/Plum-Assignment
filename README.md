@@ -1,186 +1,62 @@
-# 🩺 Medical Billing OCR Parser  
-**AI-Powered Financial Data Extraction for Healthcare Documents**
+# 🩺 Medical Billing OCR Parser
 
-An intelligent **Node.js + Express** backend that converts noisy OCR output from medical bills into **clean, structured, and validated financial data**.  
-Built as a technical assessment project for **Plum (Health Insurance Platform)**.
+A specialized Node.js/Express backend service designed to extract and intelligently auto-correct financial data from medical bill OCR text. This project was developed as a technical assessment for **Plum**.
 
----
-
-## 🌟 Why This Project Exists
-
-Medical bills often contain OCR errors like:
-
-T0tal → Total
-Pald → Paid
-l200 → 1200
-
-
-Such noise breaks automation pipelines for:
-- Insurance claims
-- Reimbursements
-- Hospital accounting
-
-This system applies **AI-based deep correction + structured parsing** to transform raw OCR text into **trustworthy billing data**.
+**Live Backend Link:** [https://plum-assignment-7zqq.onrender.com](https://plum-assignment-7zqq.onrender.com)
 
 ---
 
-## ✨ Core Features
+## 🌟 Project Overview
+Handling OCR data from medical bills is challenging due to "noisy" text. This solution leverages AI to not only extract data but to perform a **Deep Correction** pass, ensuring the final output is clean, standardized, and ready for insurance processing.
 
-### 🔍 Deep OCR Error Correction
-Fixes real-world OCR mistakes automatically:
-- `Pald` → `Paid`
-- `l200` → `1200`
-- `T0tal` → `Total`
-
-Corrections apply to:
-- Extracted values  
-- Original source snippets (for auditability)
-
----
-
-### 💱 Intelligent Currency Detection & Normalization
-Detects currencies such as:
-- INR
-- USD
-- EUR
-- GBP  
-
-and normalizes them for consistent downstream processing.
-
----
-
-### 🧠 Smart Financial Classification
-Each amount is categorized into:
-- `total_bill`
-- `paid`
-- `due`
-- `discount`
-
-with full traceability to the original OCR text.
-
----
-
-### 🧵 Stream-Safe API Design
-Middleware is ordered to correctly handle:
-- Multipart OCR uploads  
-- JSON payloads  
-- AI processing  
-
-This prevents file-stream corruption — a common production bug.
-
----
-
-## 🏗️ System Architecture
-
-
-
-OCR Text
-↓
-Express API
-↓
-AI Normalization Engine
-↓
-Structured JSON Output
-↓
-Insurance / Billing Systems
-
+## ✨ Key Features
+* **Deep Text Correction**: Automatically fixes common OCR errors (e.g., "Pald" → "Paid", "l200" → "1200") in both the structured fields and the source snippets.
+* **Currency Normalization**: Automatically normalizes all financial values to **INR**, regardless of the input currency (USD, Rs, etc.).
+* **Intelligent Field Classification**: Extracts and maps `total_bill`, `paid`, `due`, and `discount` types.
+* **Stream-Safe Architecture**: Optimized middleware ordering ensures that file upload streams are handled correctly without interference from general body parsers.
 
 ---
 
 ## 🚀 Getting Started
 
-### ⚙️ Installation
+### 1. Prerequisites
+* **Node.js** (v14+)
+* An **OpenRouter API Key**
 
+### 2. Installation
+<!-- ```bash -->
 
-git clone <your-repo-url>
-cd medical-ocr-backend
+git clone <your-repo-link>
+cd medical-billing-parser
 npm install
 
-🔑 Environment Setup
-
-Create a .env file in the project root:
-
+### 3. Environment Variables
 PORT=5000
 OPENROUTER_API_KEY=your_api_key_here
-OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
+OPENROUTER_BASE_URL=[https://openrouter.ai/api/v1](https://openrouter.ai/api/v1)
 
-▶️ Run the Server
-npm start
+---
 
+## 🧪 Testing & Validation
 
-Server will start on:
+To verify the **Deep Correction** and **Currency Normalization** logic, use the following test case in Postman:
 
-http://localhost:5000
+* **Endpoint:** `POST /api/amounts/process`
+* **Method:** `POST`
+* **Sample Input:**
+    ```json
+    {
+      "text": "Total: INR 1200 | Paid: 1000 | Due: 200 | Discount: 10%"
+    }
+    ```
 
-🧪 Testing the AI Parser
-Endpoint
-POST /api/amounts/process
+### ✅ Successful Extraction Example
+The following screenshot demonstrates the system accurately parsing the input text into a structured JSON response with a **200 OK** status.
 
-Sample Request
-{
-  "text": "T0tal: USD l200 | Pald: 1000 | Due: 200 | Discount: 10%"
-}
+![Postman API Test Result]
+C:\Users\hp\OneDrive_old\Desktop\plum\medical-ocr-backend\image.png
 
-Example AI Output
-{
-  "currency": "USD",
-  "amounts": [
-    { "type": "total_bill", "value": 1200, "source": "text: 'Total: USD 1200'" },
-    { "type": "paid", "value": 1000, "source": "text: 'Paid: 1000'" },
-    { "type": "due", "value": 200, "source": "text: 'Due: 200'" }
-  ],
-  "status": "ok"
-}
-
-
-Notice:
-
-OCR errors corrected
-
-Currency detected
-
-Values structured
-
-Original phrases preserved
-
-🛡️ Error Handling
-
-The system is designed to be production-safe.
-
-Scenario	Response
-No usable billing data	{ "status": "no_amounts_found", "reason": "document too noisy" }
-AI failure / timeout	Structured error response
-Invalid OCR	Graceful fallback
-🧠 Key Design Decisions
-Middleware Ordering
-
-Routes are mounted before express.json() to preserve multipart file streams for OCR uploads.
-
-Prompt Engineering
-
-The AI is instructed as a medical billing editor, not just a parser — enabling:
-
-Error correction
-
-Currency inference
-
-Source validation
-
-This drastically reduces hallucinations.
-
-🏆 Why This Matters for Plum
-
-This backend mirrors real health-insurance pipelines:
-
-Hospital Bill → OCR → AI Normalization → Claim Processing → Payout
-
-
-It demonstrates:
-
-Backend API design
-
-AI integration
-
-Data reliability
-
-Production-grade error handling
+**Key Observations in the Response:**
+* **Currency Standardization**: The output correctly identifies "INR" as the primary currency.
+* **Structured Mapping**: Data points like `total_bill`, `paid`, and `due` are mapped to numerical values.
+* **Audit Trail**: The `source` field captures exactly where the AI extracted the information from the original text.   
