@@ -26,14 +26,14 @@ Handling OCR data from medical bills is challenging due to "noisy" text. This so
 ### 2. Installation
 <!-- ```bash -->
 
-git clone <your-repo-link>
-cd medical-billing-parser
-npm install
+* git clone <your-repo-link>
+* cd medical-billing-parser
+* npm install
 
 ### 3. Environment Variables
-PORT=5000
-OPENROUTER_API_KEY=your_api_key_here
-OPENROUTER_BASE_URL=[https://openrouter.ai/api/v1](https://openrouter.ai/api/v1)
+* PORT=5000
+* OPENROUTER_API_KEY=your_api_key_here
+* OPENROUTER_BASE_URL=[https://openrouter.ai/api/v1](https://openrouter.ai/api/v1)
 
 ---
 
@@ -44,6 +44,7 @@ To verify the **Deep Correction** and **Currency Normalization** logic, use the 
 * **Endpoint:** `POST /api/amounts/process`
 * **Method:** `POST`
 * **Sample Input:**
+  
     ```json
     {
       "text": "Total: INR 1200 | Paid: 1000 | Due: 200 | Discount: 10%"
@@ -52,9 +53,9 @@ To verify the **Deep Correction** and **Currency Normalization** logic, use the 
 
 ### ✅ Successful Extraction Example
 The following screenshot demonstrates the system accurately parsing the input text into a structured JSON response with a **200 OK** status.
+ 
+<img width="707" height="375" alt="image" src="https://github.com/user-attachments/assets/2e0fd7c8-308d-47e0-9606-c35d6d749d9d" />
 
-![Postman API Test Result]
-C:\Users\hp\OneDrive_old\Desktop\plum\medical-ocr-backend\image.png
 
 **Key Observations in the Response:**
 * **Currency Standardization**: The output correctly identifies "INR" as the primary currency.
