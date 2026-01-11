@@ -8,7 +8,7 @@ const app = express();
 // 1. Basic Middleware ⚙️
 app.use(cors());
 app.use(express.json()); 
-
+ 
 // 2. Routes 🛣️
 app.use('/api/amounts', amountRoutes);
 
