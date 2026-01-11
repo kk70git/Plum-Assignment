@@ -5,14 +5,14 @@ const amountRoutes = require('./routes/amountRoutes');
 
 const app = express();
 
-// 1. Basic Middleware ⚙️
+// 1. Basic Middleware 
 app.use(cors());
 app.use(express.json()); 
  
-// 2. Routes 🛣️
+// 2. Routes 
 app.use('/api/amounts', amountRoutes);
 
-// 3. Simple Error Handling 🛡️
+// 3. Simple Error Handling 
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ status: 'error', message: err.message });
