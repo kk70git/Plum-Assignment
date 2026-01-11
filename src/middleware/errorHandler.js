@@ -1,7 +1,7 @@
 // Central error handler for Express and multer/busboy errors
 module.exports = (err, req, res, next) => {
   console.error('Unhandled error:', err && err.stack ? err.stack : err);
-
+ 
   // Multer file-size limit
   if (err && err.code === 'LIMIT_FILE_SIZE') {
     return res.status(413).json({ status: 'error', message: 'File too large' });
