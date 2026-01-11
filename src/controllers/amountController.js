@@ -2,7 +2,7 @@ const { processInput } = require('../services/ocrService');
 const { analyzeBill } = require('../services/aiService');
 
 const processMedicalDocument = async (req, res) => {
-  try {
+  try { 
     // 1. Extract input (from a file upload or a JSON text field)
     const inputData = req.file ? req.file.buffer : req.body.text;
     if (!inputData) {
