@@ -1,11 +1,11 @@
 const OpenAI = require("openai");
-require("dotenv").config();
+require("dotenv").config(); 
 
 const openai = new OpenAI({
   baseURL: process.env.OPENROUTER_BASE_URL,  
   apiKey: process.env.OPENROUTER_API_KEY,
 });
-
+ 
 const analyzeBill = async (rawText) => {
   try {
     const response = await openai.chat.completions.create({
